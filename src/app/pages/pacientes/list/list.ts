@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, inject } from '@angular/core';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AutoFocusModule } from 'primeng/autofocus';
 import { Button, ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
@@ -11,6 +11,7 @@ import { PacienteResponseModel } from '../../../models/paciente.model';
 import { DatePickerModule } from 'primeng/datepicker';
 import { InputMaskModule } from 'primeng/inputmask';
 import { TextareaModule } from 'primeng/textarea';
+import { FluidModule } from 'primeng/fluid';
 
 
 
@@ -18,7 +19,7 @@ import { TextareaModule } from 'primeng/textarea';
   selector: 'app-list',
   imports: [ButtonModule,InputTextModule, SelectModule, 
     FormsModule, TableModule,RegistroStatusTag,
-    AutoFocusModule,DialogModule,InputMaskModule,DatePickerModule,TextareaModule],
+    AutoFocusModule,DialogModule,InputMaskModule,DatePickerModule,TextareaModule,FluidModule,ReactiveFormsModule],
   templateUrl: './list.html',
 })
 export class List {
@@ -27,6 +28,21 @@ export class List {
   filtroSelecionado:string = "Todos";
   pesquisa: string = "";
   visible: boolean = false;
+
+  private readonly formBuilder = inject(FormBuilder);
+  
+  pacienteForm = this.formBuilder.group({
+    nome:['',[Validators.required, Validators.minLength(3), Validators.maxLength(100)]],
+    telefone:['',[Validators.maxLength(15)]],
+    cpf:['',[Validators.required,Validators.maxLength(14)]],
+    dataNascimento:['',[Validators.required]],
+    email:['',[Validators.email,Validators.maxLength(60)]],
+    endereco:[null,[Validators.maxLength(45)]],
+    observacoes:[null],
+    tipoSanguineo:['O+',[Validators.required]]
+  });
+
+  tipoSanguineoOpcoes: string[]=['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'];
 
   pacientes: PacienteResponseModel[] = [
   {
@@ -105,6 +121,14 @@ export class List {
   showDialog():void{
     this.visible = true;
     
+  }
+  cancelar(){
+    this.visible = false;
+    this.pacienteForm.reset();
+  }
+
+  salvar(){
+
   }
 
 }

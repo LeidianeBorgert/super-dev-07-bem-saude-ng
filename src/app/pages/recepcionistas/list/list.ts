@@ -1,29 +1,33 @@
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, inject } from '@angular/core';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Button } from "primeng/button";
-import {InputTextModule} from "primeng/inputtext"
-import {SelectModule} from "primeng/select"
-import {TableModule} from "primeng/table"
+import { InputTextModule } from "primeng/inputtext"
+import { SelectModule } from "primeng/select"
+import { TableModule } from "primeng/table"
 import { RecepcionistaResponseModel } from '../../../models/recepcionista.model';
 import { RegistroStatusTag } from '../../../core/components/registro-status-tag/registro-status-tag';
-import {AutoFocusModule} from "primeng/autofocus"
+import { AutoFocusModule } from "primeng/autofocus"
 import { DialogModule } from 'primeng/dialog';
 
 @Component({
   selector: 'app-list',
-  imports: [Button,InputTextModule, SelectModule, FormsModule, TableModule,RegistroStatusTag, AutoFocusModule,DialogModule],
+  imports: [Button, InputTextModule, SelectModule, FormsModule, TableModule, RegistroStatusTag, AutoFocusModule, DialogModule,
+      ReactiveFormsModule],
   templateUrl: './list.html',
 })
 export class List {
+  private readonly formBuilder = inject(FormBuilder);
 
   filtros = ["Todos", "Ativos", "Inativos"];
   filtroSelecionado: string = "Todos";
   pesquisa: string = "";
-  visible=false;
+  visible = false;
 
+  recepcionistaForm = this.formBuilder.group({
+    nome:['', [Validators.required, Validators.minLength(3), Validators.maxLength(45)]]
+  })
 
-
-    recepcionistas: RecepcionistaResponseModel[] = [
+  recepcionistas: RecepcionistaResponseModel[] = [
     {
       id: "019c10ee-b3e2-7a81-aaf6-2222bbe48f56",
       nome: "Ana Paula Silva",
@@ -51,8 +55,16 @@ export class List {
     }
   ];
 
-  showDialog(){
+  showDialog() {
     this.visible = true;
   };
 
+  cancelar(){
+    this.visible = false;
+    this.recepcionistaForm.reset();
+  }
+
+  salvar(){
+
+  }
 }

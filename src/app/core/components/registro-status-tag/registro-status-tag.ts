@@ -9,6 +9,5 @@ import { TagModule } from 'primeng/tag';
 })
 export class RegistroStatusTag {
   status = input<boolean>();
-  
 
 }
