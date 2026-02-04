@@ -1,19 +1,26 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AutoFocusModule } from 'primeng/autofocus';
-import { Button } from 'primeng/button';
+import { Button, ButtonModule } from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { InputTextModule } from 'primeng/inputtext';
 import { SelectModule } from 'primeng/select';
 import { TableModule } from 'primeng/table';
-import { RegistroStatusTag } from '../../../core/components/registro-status-tag/registro-status-tag';
 import { ConsultaResponseModel } from '../../../models/consulta.model';
 import { ConsultaStatusTag } from "../../../core/consulta-status-tag/consulta-status-tag";
+import { DatePickerModule } from 'primeng/datepicker';
+import { FluidModule } from 'primeng/fluid';
+import { InputMaskModule } from 'primeng/inputmask';
+import { TextareaModule } from 'primeng/textarea';
+import { InputGroupModule } from 'primeng/inputgroup';
+import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
+
 
 @Component({
   selector: 'app-list',
   imports: [Button, InputTextModule, SelectModule, FormsModule, TableModule, AutoFocusModule, DialogModule,
-    ReactiveFormsModule, ConsultaStatusTag],
+    ReactiveFormsModule, ConsultaStatusTag,DatePickerModule,ButtonModule,
+    InputGroupModule,InputMaskModule,TextareaModule,FluidModule,InputGroupAddonModule],
   templateUrl: './list.html',
 })
 export class List {
@@ -22,6 +29,9 @@ export class List {
   filtroStatusSelecionado: string = "Todos os Status";
   filtroProfissional = ["Todos Profissionais"];
   filtroProfissionalSelecionado: string = "Todos Profissionais";
+  data:string="";
+  horario:string=""
+  
 
 
   visible: boolean = false;
