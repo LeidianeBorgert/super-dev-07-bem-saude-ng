@@ -1,0 +1,7 @@
+@if (status() === "Paga"){
+<p-tag value="Paga" severity="success" [rounded]="true"/>
+}@else if(status() === "Pendente") {
+<p-tag value="Pendente" severity="warn" [rounded]="true"/>
+}@else if(status() === "Cancelada") {
+<p-tag value="Cancelada" severity="danger" [rounded]="true"/>
+}

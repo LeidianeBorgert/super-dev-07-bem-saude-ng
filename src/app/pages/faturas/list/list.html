@@ -1,0 +1,72 @@
+<div class="space-y-6">
+
+    <div class="flex justify-between">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-900">Financeiro</h1>
+            <p class="text-gray-600">Gestão de faturas e pagamentos </p>
+        </div>
+
+        <p-button label="Nova Fatura" icon="fa fa-plus" (onClick)="showDialog()"></p-button>
+    </div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-3 ">
+    <div class="bg-white rounded-xl shadow-sm p-4 ">
+        <div class="flex flex-row gap-4 grid">
+            <p class=" text-gray-600">Em Aberto</p>
+            <p class="font-bold text-yellow-600">R$450.00</p>
+        </div>
+    </div>
+    <div class="bg-white rounded-xl shadow-sm p-4">
+        <div class="flex flex-row gap-4 grid">
+            <p class=" text-gray-600">Recebido Hoje</p>
+            <p class="font-bold text-green-600">R$ 800.00</p>
+        </div>
+    </div>
+        <div class="bg-white rounded-xl shadow-sm p-4">
+        <div class="flex flex-row gap-4 grid">
+            <p class=" text-gray-600">Total do Mês</p>
+            <p class="font-bold text-blue-600">R$ 1200.00</p>
+        </div>
+    </div>
+    </div>
+    <div class="bg-white rounded-xl shadow-sm p-4">
+        <div class="flex flex-row gap-4">
+            <input pInputText placeholder="Busca por paciente" fluid [(ngModel)]="pesquisa" [pAutoFocus]="true">
+
+            <p-select [options]="status" [(ngModel)]="statusSelecionado"></p-select>
+        </div>
+    </div>
+
+    <p-table [value]="faturas" [tableStyle]="{ 'min-width': '50rem' }" [paginator]="true" [rows]="5"
+        [rowsPerPageOptions]="[5, 10, 20]">
+        <ng-template #header>
+            <tr>
+                <th>Fatura</th>
+                <th>Paciente</th>
+                <th>Data</th>
+                <th>Valor</th>
+                <th>Status</th>
+
+                <th>
+                    <div class="text-right">Ações</div>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template #body let-fatura>
+            <tr>
+                <td>{{ fatura.id }}</td>
+                <td>{{ fatura.paciente }}</td>
+                <td>{{ fatura.data | date:'dd/MM/yyyy'}}</td>
+                <td>{{ fatura.valor | number:'R$' }}</td>
+                <td>
+                    <app-fatura-status-tag [status]="fatura.status" />
+                </td>
+                <td>
+                    <div class="flex gap-1 justify-end">
+                        <p-button icon="fa-regular fa-pen-to-square" variant="text" severity="info" />
+                        <p-button icon="fa fa-trash" variant="text" severity="danger" />
+                    </div>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
